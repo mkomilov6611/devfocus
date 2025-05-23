@@ -1,0 +1,12 @@
+{
+  "name": "devfocus",
+  "version": "1.0.0",
+  "description": "CLI tool for developers to block distracting websites",
+  "bin": {
+    "devfocus": "./cli.js"
+  },
+  "dependencies": {
+    "commander": "^9.0.0"
+  },
+  "license": "MIT"
+}
