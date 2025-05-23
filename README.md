@@ -1,22 +1,49 @@
-# Website Blocker
+# DevFocus
+A cross-platform CLI tool designed for developers to block distracting websites, enabling a distraction-free coding environment by modifying the system hosts file.
 
-A cross-platform CLI tool to block websites for focused work by modifying the system hosts file.
+## Features
+- **Block Websites**: Add websites to a block list to prevent access during coding sessions.
+- **Focus Mode**: Toggle focus mode to block or unblock websites instantly (`on` or `off`).
+- **Cross-Platform**: Works on macOS, Linux, and Windows.
+- **Developer-Friendly**: Simple commands to manage distractions, ideal for deep work and coding sprints.
 
 ## Installation
-
+### Via npm (Recommended for Node.js Developers)
 ```bash
 npm install -g devfocus
 ```
+Requires Node.js v16 or higher.
 
 ## Usage
+Run commands with `sudo` on macOS/Linux or as Administrator on Windows for commands that modify the hosts file (`focus`, `clear`).
 
-Add websites to block: devfocus add example.com
-Remove websites: devfocus remove example.com
-Toggle focus mode: devfocus focus [on|off]
-List blocked websites: devfocus print
-Clear block list: devfocus clear
+- **Add websites to block**:
+  ```bash
+  devfocus add example.com github.com
+  ```
+- **Remove websites**:
+  ```bash
+  devfocus remove example.com
+  ```
+- **Toggle focus mode**:
+  ```bash
+  sudo devfocus focus on   # Block websites
+  sudo devfocus focus off  # Unblock websites
+  sudo devfocus focus      # Toggle between on/off
+  ```
+- **List blocked websites**:
+  ```bash
+  devfocus print
+  ```
+- **Clear block list**:
+  ```bash
+  sudo devfocus clear
+  ```
 
 ## Requirements
+- **Node.js**: v16 or higher (for npm/source installation).
+- **Administrative Privileges**: Required for modifying the hosts file (`/etc/hosts` on macOS/Linux, `C:\Windows\System32\drivers\etc\hosts` on Windows).
+- **Homebrew**: For macOS/Linux users installing via Homebrew.
 
-Node.js v16 or higher
-Administrative privileges for modifying the hosts file
+## Contributing
+Contributions are welcome! Fork the repository, make changes, and submit a pull request.
