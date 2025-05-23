@@ -10,7 +10,7 @@ A cross-platform CLI tool designed for developers to block distracting websites,
 ## Installation
 ### Via npm (Recommended for Node.js Developers)
 ```bash
-npm install -g devfocus
+sudo npm install --location=global devfocus
 ```
 Requires Node.js v16 or higher.
 
@@ -43,7 +43,6 @@ Run commands with `sudo` on macOS/Linux or as Administrator on Windows for comma
 ## Requirements
 - **Node.js**: v16 or higher (for npm/source installation).
 - **Administrative Privileges**: Required for modifying the hosts file (`/etc/hosts` on macOS/Linux, `C:\Windows\System32\drivers\etc\hosts` on Windows).
-- **Homebrew**: For macOS/Linux users installing via Homebrew.
 
 ## Contributing
 Contributions are welcome! Fork the repository, make changes, and submit a pull request.
