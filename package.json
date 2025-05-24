@@ -1,12 +1,25 @@
 {
   "name": "devfocus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI tool for developers to block distracting websites",
   "author": "Mukhammadnazar Komilov",
   "bin": {
     "devfocus": "./cli.js"
   },
   "main": "cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkomilov6611/devfocus.git"
+  },
+  "homepage": "https://github.com/mkomilov6611/devfocus#readme",
+  "bugs": {
+    "url": "https://github.com/mkomilov6611/devfocus/issues"
+  },
+  "keywords": [
+    "cli", "website-blocker", "focus", "productivity", "hosts-file", 
+    "cross-platform", "distraction", "time-management", "work-focus",
+    "social-media-blocker", "parental-controls", "digital-wellbeing"
+  ],
   "scripts": {
     "test": "jest"
   },

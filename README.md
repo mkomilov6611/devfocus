@@ -8,11 +8,14 @@ A cross-platform CLI tool designed for developers to block distracting websites,
 - **Developer-Friendly**: Simple commands to manage distractions, ideal for deep work and coding sprints.
 
 ## Installation
-### Via npm (Recommended for Node.js Developers)
+
+### Via npm
 ```bash
 sudo npm install --location=global devfocus
 ```
 Requires Node.js v16 or higher.
+
+### Homebrew - Coming next...
 
 ## Usage
 Run commands with `sudo` on macOS/Linux or as Administrator on Windows for commands that modify the hosts file (`focus`, `clear`).
