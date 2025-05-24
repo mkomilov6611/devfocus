@@ -7,8 +7,14 @@
     "devfocus": "./cli.js"
   },
   "main": "cli.js",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "commander": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   },
   "license": "MIT"
 }
