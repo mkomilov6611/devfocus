@@ -1,6 +1,6 @@
 {
   "name": "devfocus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI tool for developers to block distracting websites",
   "author": "Mukhammadnazar Komilov",
   "bin": {
