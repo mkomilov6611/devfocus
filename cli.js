@@ -314,30 +314,40 @@ program
     "A cross-platform CLI tool to block websites for focused work 🚀"
   );
 
-// Focus command
+// Focus mode commands
 program
-  .command("focus [state]")
-  .description("Control focus mode (state: 'on' or 'off')")
-  .action(async (state) => {
+  .command("on")
+  .description("Enable focus mode (block websites)")
+  .action(async () => {
     if (!(await hasAdminPrivileges())) {
       console.error(ERRORS.ADMIN_REQUIRED);
       process.exit(1);
     }
 
     try {
-      if (!state || state.toLowerCase() === "on") {
-        const websites = await readBlockList();
-        if (websites.length === 0) {
-          console.log(ERRORS.NO_WEBSITES);
-          return;
-        }
-        await applyBlockList();
-      } else if (state.toLowerCase() === "off") {
-        await clearHostsFile();
-      } else {
-        console.error(ERRORS.INVALID_STATE);
-        process.exit(1);
+      const websites = await readBlockList();
+      if (websites.length === 0) {
+        console.log(ERRORS.NO_WEBSITES);
+        return;
       }
+      await applyBlockList();
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      process.exit(1);
+    }
+  });
+
+program
+  .command("off")
+  .description("Disable focus mode (unblock websites)")
+  .action(async () => {
+    if (!(await hasAdminPrivileges())) {
+      console.error(ERRORS.ADMIN_REQUIRED);
+      process.exit(1);
+    }
+
+    try {
+      await clearHostsFile();
     } catch (error) {
       console.error(`Error: ${error.message}`);
       process.exit(1);
