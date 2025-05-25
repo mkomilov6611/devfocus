@@ -15,18 +15,16 @@ sudo npm install --location=global devfocus
 ```
 Requires Node.js v16 or higher.
 
-### Homebrew - Coming next...
-
 ## Usage
 Run commands with `sudo` on macOS/Linux or as Administrator on Windows for commands that modify the hosts file (`focus`, `clear`).
 
 - **Add websites to block**:
   ```bash
-  devfocus add example.com github.com
+  devfocus add youtube.com instagram.com reddit.com
   ```
 - **Remove websites**:
   ```bash
-  devfocus remove example.com
+  devfocus remove youtube.com
   ```
 - **Toggle focus mode**:
   ```bash
@@ -48,3 +46,9 @@ Run commands with `sudo` on macOS/Linux or as Administrator on Windows for comma
 
 ## Contributing
 Contributions are welcome! Fork the repository, make changes, and submit a pull request.
+
+## What's coming next?
+
+ - Have the package also in the Homebrew 🍺
+ - Auto block/unblock scheduler 🕥
+ - Stronger block that builds discipline 🔒, you might want to do some hacking for unblocking it again 🤞
