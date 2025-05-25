@@ -30,9 +30,8 @@ Run commands with `sudo` on macOS/Linux or as Administrator on Windows for comma
   ```
 - **Toggle focus mode**:
   ```bash
-  sudo devfocus focus on   # Block websites
-  sudo devfocus focus off  # Unblock websites
-  sudo devfocus focus      # Toggle between on/off
+  sudo devfocus on   # Block websites
+  sudo devfocus off  # Unblock websites
   ```
 - **List blocked websites**:
   ```bash
