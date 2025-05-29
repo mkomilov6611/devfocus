@@ -29,11 +29,13 @@ Run commands with `sudo` on macOS/Linux or as Administrator on Windows for comma
 - **Toggle focus mode**:
   ```bash
   sudo devfocus on   # Block websites
+  sudo devfocus on -h 2 # Block websites for 2 hours
+
   sudo devfocus off  # Unblock websites
   ```
 - **List blocked websites**:
   ```bash
-  devfocus print
+  devfocus list
   ```
 - **Clear block list**:
   ```bash
@@ -50,5 +52,4 @@ Contributions are welcome! Fork the repository, make changes, and submit a pull 
 ## What's coming next?
 
  - Have the package also in the Homebrew 🍺
- - Auto block/unblock scheduler 🕥
  - Stronger block that builds discipline 🔒, you might want to do some hacking for unblocking it again 🤞

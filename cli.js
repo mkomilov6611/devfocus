@@ -46,11 +46,11 @@ const ERRORS = {
 const MESSAGES = {
   ADDED: "Added websites to block list",
   REMOVED: "Removed websites from block list",
-  FOCUS_ON: "Focus mode is ON 🎯",
-  FOCUS_OFF: "Focus mode is OFF 📶 All websites unblocked 🟢",
-  CLEARED: "Cleared all blocked websites and block list. 💯",
+  FOCUS_ON: "🎯 Focus mode is ON",
+  FOCUS_OFF: "✅ Focus mode is OFF ✅ All websites unblocked.",
+  CLEARED: "🗑️ Cleared all blocked websites and block list.",
   RESTART_BROWSER:
-    "If the websites still not blocked, it may be necessary to restart the browser 🔌",
+    "🔁 If the websites still not blocked, it may be necessary to restart the browser",
   ALL_EXISTS: "All provided websites are already in the block list.",
   NONE_FOUND: "No matching websites found in the block list.",
   EMPTY_LIST: "No websites in the block list.",
@@ -267,17 +267,19 @@ async function applyBlockList({ timer = 0 } = {}) {
   await flushDnsCache();
 
   console.log(
-    `${MESSAGES.FOCUS_ON}\nBlocked websites: ${websites.join(", ")} 🚫`
+    `\n${MESSAGES.FOCUS_ON}\n🚫 Blocked websites: ${websites.join(", ")}`
   );
-  console.log(`${MESSAGES.RESTART_BROWSER}\n`);
+  console.log(`${MESSAGES.RESTART_BROWSER}`);
 
   // Handle timer argument
   if (timer) {
-    console.log(`Focus mode will automatically turn off in ${timer} hours...`);
+    console.log(
+      `⏳ Focus mode will automatically turn off in ${timer} hours...`
+    );
 
     setTimeout(async () => {
       await clearHostsFile();
-      console.log(`Focus mode has been turned off after ${timer} hours.`);
+      console.log(`⌛ Focus mode has been turned off after ${timer} hours.`);
     }, timer * 1000 * 60 * 60); // Convert hours to milliseconds
   }
 }
@@ -292,7 +294,7 @@ async function clearHostsFile() {
 
   await writeHostsFile(hostsContent);
   await flushDnsCache();
-  console.log(MESSAGES.FOCUS_OFF);
+  console.log(`\n${MESSAGES.FOCUS_OFF}`);
 }
 
 /**
@@ -330,7 +332,7 @@ program
     "Enable focus mode by blocking websites from the block list. Optionally specify a timer in hours to automatically disable focus mode after the specified time."
   )
   .option(
-    "-t, --timer <hours>",
+    "-h, --hour <hours>",
     "Timer duration in hours",
     (value) => {
       const timer = parseFloat(value, 10);
@@ -353,7 +355,7 @@ program
         console.log(ERRORS.NO_WEBSITES);
         return;
       }
-      await applyBlockList({ timer: options.timer });
+      await applyBlockList({ timer: options.hour });
     } catch (error) {
       console.error(`Error: ${error.message}`);
       process.exit(1);
