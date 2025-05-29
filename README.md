@@ -1,9 +1,31 @@
 # DevFocus
 A cross-platform CLI tool designed for developers to block distracting websites, enabling a distraction-free coding environment by modifying the system hosts file.
 
+## Why Choose DevFocus CLI Over Other Apps/Extensions? 🚀
+**Cost**
+- *Others*: Costly subscriptions drain funds better spent on coding fuel. 💸
+- *DevFocus*: Free via npm, saving your budget for that extra Espresso! ☕
+
+**Block Limits**  
+- *Others*: Limited site blocking lets distractions sneak through. 🕳️
+- *DevFocus*: Unlimited blocks secure your focus like a locked repo! 🔐
+
+**Interface**  
+- *Others*: Complex GUIs make blocking a chore. 🥴
+- *DevFocus*: Sleek CLI, as smooth as running `devfocus on` for instant focus! 😎
+
+**Ads**  
+- *Others*: Disruptive ads sabotage your productivity. 📣
+- *DevFocus*: Ad-free, keeping your workspace clean as a fresh commit! ✨
+
+**Dev Fit**  
+- *Others*: Made for all, not only devs😕
+- *DevFocus*: Dev-first, your terminal’s best pal for distraction-free coding! 🖱️
+
 ## Features
 - **Block Websites**: Add websites to a block list to prevent access during coding sessions.
 - **Focus Mode**: Toggle focus mode to block or unblock websites instantly (`on` or `off`).
+- **Focus Mode Scheduled**: Specify hours to focus, and it will schedule the unblocking for you.
 - **Cross-Platform**: Works on macOS, Linux, and Windows.
 - **Developer-Friendly**: Simple commands to manage distractions, ideal for deep work and coding sprints.
 
