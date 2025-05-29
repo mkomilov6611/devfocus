@@ -41,7 +41,7 @@ const {
   addWebsites,
   removeWebsites,
   clearWebsites,
-  printWebsites,
+  listWebsites,
   applyBlockList,
   clearHostsFile,
   flushDnsCache,
@@ -347,7 +347,7 @@ describe("Website Blocker CLI Tool", () => {
     });
   });
 
-  describe("printWebsites", () => {
+  describe("listWebsites", () => {
     it("should print websites when block list exists", async () => {
       fs.readFile
         .mockResolvedValueOnce(
@@ -355,7 +355,7 @@ describe("Website Blocker CLI Tool", () => {
         )
         .mockResolvedValueOnce("127.0.0.1 localhost");
 
-      await printWebsites();
+      await listWebsites();
 
       expect(consoleSpy.log).toHaveBeenCalledWith(
         expect.stringContaining("Block list (Focus mode: OFF)")
@@ -367,7 +367,7 @@ describe("Website Blocker CLI Tool", () => {
     it("should print message when no websites in block list", async () => {
       fs.readFile.mockResolvedValue(JSON.stringify({ websites: [] }));
 
-      await printWebsites();
+      await listWebsites();
 
       expect(consoleSpy.log).toHaveBeenCalledWith(
         "No websites in the block list."

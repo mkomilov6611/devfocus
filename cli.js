@@ -226,7 +226,7 @@ async function clearWebsites() {
 /**
  * Displays current block list and focus mode status
  */
-async function printWebsites() {
+async function listWebsites() {
   const websites = await readBlockList();
   const focusMode = await isFocusModeOn();
 
@@ -386,13 +386,13 @@ program
     }
   });
 
-// Print command
+// List command
 program
-  .command("print")
-  .description("Print the current block list")
+  .command("list")
+  .description("List the current block list")
   .action(async () => {
     try {
-      await printWebsites();
+      await listWebsites();
     } catch (error) {
       console.error(`Error: ${error.message}`);
       process.exit(1);
@@ -432,7 +432,7 @@ module.exports = {
   addWebsites,
   removeWebsites,
   clearWebsites,
-  printWebsites,
+  listWebsites,
   applyBlockList,
   clearHostsFile,
   flushDnsCache,
