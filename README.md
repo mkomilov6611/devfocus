@@ -23,7 +23,7 @@ sudo npm install --location=global devfocus
 ```
 Requires Node.js v16 or higher.
 
-## Usage
+## Usage 💻
 Run commands with `sudo` on macOS/Linux or as Administrator on Windows for commands that modify the hosts file (`focus`, `clear`).
 
 - **Add websites to block**:
