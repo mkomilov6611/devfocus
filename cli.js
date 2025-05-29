@@ -320,7 +320,7 @@ async function flushDnsCache() {
 
 // CLI setup
 program
-  .version("1.1.1")
+  .version("1.1.2")
   .description(
     "A cross-platform CLI tool to block websites for focused work 🚀"
   );
