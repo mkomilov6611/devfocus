@@ -31,6 +31,8 @@ const ERRORS = {
     "Error: This command requires administrative privileges. Run with sudo on macOS/Linux or as Administrator on Windows.",
   INVALID_STATE:
     "Error: Invalid state. Use 'on' or 'off' as the state argument.",
+  INVALID_TIMER:
+    "Error: Invalid timer value. Use a positive integer for the timer.",
   NO_WEBSITES:
     'No websites in block list. Add websites using the "add" command.',
   HOSTS_READ: "Error reading hosts file",
@@ -47,7 +49,6 @@ const MESSAGES = {
   FOCUS_ON: "Focus mode is ON 🎯",
   FOCUS_OFF: "Focus mode is OFF 📶 All websites unblocked 🟢",
   CLEARED: "Cleared all blocked websites and block list. 💯",
-  DNS_FLUSHED: "DNS cache flushed 🚀",
   RESTART_BROWSER:
     "If the websites still not blocked, it may be necessary to restart the browser 🔌",
   ALL_EXISTS: "All provided websites are already in the block list.",
@@ -69,11 +70,13 @@ async function hasAdminPrivileges() {
       return false;
     }
   } else {
+    // macOS/Linux
     try {
       const { stdout } = await execPromise("id -u");
       return parseInt(stdout.trim(), 10) === 0;
     } catch {
       try {
+        // Check if we can write to the hosts file
         await fs.access(HOSTS_FILE, fs.constants.W_OK);
         return true;
       } catch {
@@ -83,9 +86,6 @@ async function hasAdminPrivileges() {
   }
 }
 
-/**
- * Reads the hosts file content
- */
 async function readHostsFile() {
   try {
     return await fs.readFile(HOSTS_FILE, "utf8");
@@ -207,11 +207,11 @@ async function removeWebsites(websites) {
   }
 
   await writeBlockList(updatedBlockList);
+  console.log(`${MESSAGES.REMOVED}: ${websites.join(", ")}`);
 
   if (await isFocusModeOn()) {
     await applyBlockList();
   }
-  console.log(`${MESSAGES.REMOVED}: ${websites.join(", ")}`);
 }
 
 /**
@@ -241,7 +241,7 @@ async function listWebsites() {
 /**
  * Applies block list to hosts file (enables focus mode)
  */
-async function applyBlockList() {
+async function applyBlockList({ timer = 0 } = {}) {
   let hostsContent = await readHostsFile();
   const websites = await readBlockList();
 
@@ -270,6 +270,16 @@ async function applyBlockList() {
     `${MESSAGES.FOCUS_ON}\nBlocked websites: ${websites.join(", ")} 🚫`
   );
   console.log(`${MESSAGES.RESTART_BROWSER}\n`);
+
+  // Handle timer argument
+  if (timer) {
+    console.log(`Focus mode will automatically turn off in ${timer} hours...`);
+
+    setTimeout(async () => {
+      await clearHostsFile();
+      console.log(`Focus mode has been turned off after ${timer} hours.`);
+    }, timer * 1000 * 60 * 60); // Convert hours to milliseconds
+  }
 }
 
 /**
@@ -300,7 +310,6 @@ async function flushDnsCache() {
     const command = commands[os.platform()];
     if (command) {
       await execPromise(command);
-      console.log(`\n${MESSAGES.DNS_FLUSHED}`);
     }
   } catch (error) {
     console.warn(`Warning: Could not flush DNS cache: ${error.message}`);
@@ -317,8 +326,22 @@ program
 // Focus mode commands
 program
   .command("on")
-  .description("Enable focus mode (block websites)")
-  .action(async () => {
+  .description(
+    "Enable focus mode by blocking websites from the block list. Optionally specify a timer in hours to automatically disable focus mode after the specified time."
+  )
+  .option(
+    "-t, --timer <hours>",
+    "Timer duration in hours",
+    (value) => {
+      const timer = parseFloat(value, 10);
+      if (isNaN(timer) || timer < 0) {
+        throw new Error(ERRORS.INVALID_TIMER);
+      }
+      return timer;
+    },
+    0 // Default to 0 hours
+  )
+  .action(async (options) => {
     if (!(await hasAdminPrivileges())) {
       console.error(ERRORS.ADMIN_REQUIRED);
       process.exit(1);
@@ -330,7 +353,7 @@ program
         console.log(ERRORS.NO_WEBSITES);
         return;
       }
-      await applyBlockList();
+      await applyBlockList({ timer: options.timer });
     } catch (error) {
       console.error(`Error: ${error.message}`);
       process.exit(1);

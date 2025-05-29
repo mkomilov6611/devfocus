@@ -392,6 +392,25 @@ describe("Website Blocker CLI Tool", () => {
         expect.stringContaining("Focus mode is ON")
       );
     });
+
+    it("should apply with specified timer", async () => {
+      fs.readFile
+        .mockResolvedValueOnce("127.0.0.1 localhost")
+        .mockResolvedValueOnce(JSON.stringify({ websites: ["example.com"] }));
+      mockExecPromise.mockResolvedValue();
+      os.platform.mockReturnValue("linux");
+
+      await applyBlockList({ timer: 0.001 }); // 0.001 hours = 3.6 seconds
+      expect(consoleSpy.log).toHaveBeenCalledWith(
+        expect.stringContaining("Focus mode is ON")
+      );
+
+      // Pause to allow timer to complete
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+      expect(consoleSpy.log).toHaveBeenCalledWith(
+        expect.stringContaining("Focus mode is OFF")
+      );
+    });
   });
 
   describe("clearHostsFile", () => {
@@ -424,9 +443,6 @@ describe("Website Blocker CLI Tool", () => {
 
       expect(mockExecPromise).toHaveBeenCalledWith(
         "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
-      );
-      expect(consoleSpy.log).toHaveBeenCalledWith(
-        expect.stringContaining("DNS cache flushed")
       );
     });
 
