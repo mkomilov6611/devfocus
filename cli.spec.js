@@ -19,6 +19,7 @@ jest.mock("child_process", () => ({
 
 jest.mock("os", () => ({
   platform: jest.fn(),
+  tmpdir: jest.fn(),
 }));
 
 jest.mock("util", () => ({
@@ -140,6 +141,8 @@ describe("Website Blocker CLI Tool", () => {
   describe("writeHostsFile", () => {
     it("should write to hosts file on Windows using PowerShell", async () => {
       os.platform.mockReturnValue("win32");
+      os.tmpdir.mockReturnValue("C:\\Windows\\Temp");
+      fs.writeFile.mockResolvedValue();
       mockExecPromise.mockResolvedValue();
 
       await writeHostsFile("test content");

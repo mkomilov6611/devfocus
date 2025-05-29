@@ -100,12 +100,17 @@ async function readHostsFile() {
 async function writeHostsFile(content) {
   try {
     if (os.platform() === "win32") {
+      // Write to temp file first, this is done to avoid issues with powershell string escaping
+      const tempFile = path.join(os.tmpdir(), `hosts_temp_${Date.now()}.txt`);
+      await fs.writeFile(tempFile, content, "utf8");
+
+      // Copy temp file to hosts file with elevated privileges
       await execPromise(
-        `powershell -Command "Set-Content -Path '${HOSTS_FILE}' -Value \\"${content.replace(
-          /"/g,
-          '`"'
-        )}\\""`
+        `powershell -Command "Copy-Item '${tempFile}' '${HOSTS_FILE}' -Force"`
       );
+
+      // Clean up temp file
+      await fs.unlink(tempFile);
     } else {
       await execPromise(
         `echo "${content.replace(
@@ -320,7 +325,7 @@ async function flushDnsCache() {
 
 // CLI setup
 program
-  .version("1.1.2")
+  .version("1.1.3")
   .description(
     "A cross-platform CLI tool to block websites for focused work 🚀"
   );
